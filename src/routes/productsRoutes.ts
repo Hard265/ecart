@@ -1,12 +1,12 @@
 import express, { Router } from 'express';
-import * as clothesController from '../controllers/clothesController';
+import * as productsController from '../controllers/productsController';
 
 const router: Router = express.Router();
 
-router.get('/', clothesController.getAllClothes);
-router.get('/:id', clothesController.getClothesById);
-router.post('/', clothesController.createClothes);
-router.put('/:id', clothesController.updateClothes);
-router.delete('/:id', clothesController.deleteClothes);
+router.get('/', productsController.getAllProducts);
+router.get('/:id', productsController.getProductsById);
+router.post('/', productsController.createProducts);
+router.put('/:id', productsController.updateProducts);
+router.delete('/:id', productsController.deleteProducts);
 
 export default router;
