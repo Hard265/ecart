@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 // Temporary in-memory storage
 let products: any[] = [];
 
-export const getAlProducts = (req: Request, res: Response) => {
+export const getAllProducts = (req: Request, res: Response) => {
   res.json(products);
 };
 
