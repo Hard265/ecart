@@ -1,37 +1,37 @@
 import { Request, Response } from 'express';
 
 // Temporary in-memory storage
-let clothes: any[] = [];
+let products: any[] = [];
 
-export const getAllClothes = (req: Request, res: Response) => {
-  res.json(clothes);
+export const getAlProducts = (req: Request, res: Response) => {
+  res.json(products);
 };
 
-export const getClothesById = (req: Request, res: Response) => {
+export const getProductsById = (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const item = clothes.find(c => c.id === id);
+  const item = products.find(c => c.id === id);
   if (item) {
     res.json(item);
   } else {
-    res.status(404).json({ message: 'Clothes not found' });
+    res.status(404).json({ message: 'Products not found' });
   }
 };
 
 export const createProducts = (req: Request, res: Response) => {
-  const newClothes = {
-    id: clothes.length + 1,
+  const newProducts = {
+    id: products.length + 1,
     ...req.body
   };
-  clothes.push(newClothes);
-  res.status(201).json(newClothes);
+  products.push(newProducts);
+  res.status(201).json(newProducts);
 };
 
 export const updateProducts = (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const index = clothes.findIndex(c => c.id === id);
+  const index = products.findIndex(c => c.id === id);
   if (index !== -1) {
-    clothes[index] = { ...clothes[index], ...req.body };
-    res.json(clothes[index]);
+    products[index] = { ...products[index], ...req.body };
+    res.json(products[index]);
   } else {
     res.status(404).json({ message: 'Clothes not found' });
   }
@@ -39,11 +39,11 @@ export const updateProducts = (req: Request, res: Response) => {
 
 export const deleteProducts = (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const index = clothes.findIndex(c => c.id === id);
+  const index = products.findIndex(c => c.id === id);
   if (index !== -1) {
-    clothes.splice(index, 1);
+    products.splice(index, 1);
     res.status(204).send();
   } else {
-    res.status(404).json({ message: 'Clothes not found' });
+    res.status(404).json({ message: 'Products not found' });
   }
 };
