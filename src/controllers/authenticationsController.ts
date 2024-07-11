@@ -5,7 +5,12 @@ import { generateToken } from "../utils/tokens";
 
 export const signup = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-  console.log(username, password);
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please provide username and password" });
+  }
 
   // Check for existing user
   const existingUser = await User.findOne({ where: { username } });
@@ -36,11 +41,16 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please provide username and password" });
+  }
+
   // Validate credentials against your data store (using your ORM)
   const user = await User.findOne({ where: { username } });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  if (!user || !user.comparePassword(hashedPassword)) {
+  if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 

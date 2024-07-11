@@ -31,8 +31,4 @@ export class User extends Model<
   @Attribute(DataTypes.STRING)
   @NotNull
   declare password: string;
-
-  comparePassword(password: string): Boolean {
-    return this.password === password;
-  }
 }

@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import session from "express-session";
+// import session from "express-session";
 import productsRoutes from "./routes/productsRoutes";
 import authentionsRoutes from "./routes/authentionsRoutes";
 
@@ -12,14 +12,14 @@ sequelize.sync();
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false },
-  })
-);
+// app.use(
+//   session({
+//     secret: "secret",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: { secure: false },
+//   })
+// );
 app.use(express.json());
 
 app.use("/api/products", productsRoutes);
