@@ -13,6 +13,7 @@ import {
   Unique,
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
+import { Product } from "./Product"
 
 export class User extends Model<
   InferAttributes<User>,
@@ -31,4 +32,12 @@ export class User extends Model<
   @Attribute(DataTypes.STRING)
   @NotNull
   declare password: string;
+
+  @HasMany(() => Product, {
+    foreignKey: 'userId',
+    inverse:{
+      as: 'user'
+    }
+  })
+  declare products?: NonAttribute<Product[]>
 }

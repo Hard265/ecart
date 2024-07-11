@@ -18,7 +18,23 @@ export class Product extends Model<InferAttributes<Product>, InferCreationAttrib
     @NotNull
     declare name: string;
 
+
+    @Attribute(DataTypes.TEXT)
+    @NotNull
+    declare description: string;
+
+    @Attribute(DataTypes.STRING)
+    @NotNull
+    declare image: string;
+
     @Attribute(DataTypes.INTEGER)
     @NotNull
     declare price: number;
+
+    /** Defined by {@link User.products} */
+    declare user?: NonAttribute<Post>;
+
+    @Attribute(DataTypes.STRING)
+    @NotNull
+    declare userId: string;
 }
