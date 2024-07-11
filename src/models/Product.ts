@@ -31,9 +31,6 @@ export class Product extends Model<InferAttributes<Product>, InferCreationAttrib
     @NotNull
     declare price: number;
 
-    /** Defined by {@link User.products} */
-    declare user?: NonAttribute<Post>;
-
     @Attribute(DataTypes.STRING)
     @NotNull
     declare userId: string;

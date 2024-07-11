@@ -13,45 +13,59 @@ export const getAllProducts = async (
   res.json({ user: products });
 };
 
-export const getProductsById = (req: AuthenticatedRequest, res: Response) => {
-  const id = parseInt(req.params.id);
-  const item = products.find((c) => c.id === id);
+export const getProductsById = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  const item = await Product.findOne({ where: { id: id } });
   if (item) {
-    res.json(item);
+    res.json(item.toJSON());
   } else {
     res.status(404).json({ message: "Products not found" });
   }
+};
+
+export const getProductsByUser = (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  res.status(201).json({ message: "get user products" });
+
 };
 
 export const createProducts = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const newProducts = {
-    id: products.length + 1,
-    ...req.body,
-  };
-  const { id } = await Product.create({ name: "", price: 2000 });
+  // const newProducts = {
+  //   id: products.length + 1,
+  //   ...req.body,
+  // };
 
-  res.status(201).json({ id });
+  res.status(201).json({ message: "successfully created" });
 };
 
-export const updateProducts = (req: AuthenticatedRequest, res: Response) => {
-  const id = parseInt(req.params.id);
-  const index = products.findIndex((c) => c.id === id);
-  if (index !== -1) {
-    products[index] = { ...products[index], ...req.body };
-    res.json(products[index]);
+export const updateProducts = async (req: AuthenticatedRequest, res: Response) => {
+  const { id } = req.params;
+
+  const item = await Product.findOne({where: {id}})
+
+  if (item) {
+    // item.
+    res.json(item.toJSON());
   } else {
-    res.status(404).json({ message: "Clothes not found" });
+    res.status(404).json({ message: "Product not found" });
   }
 };
 
-export const deleteProducts = (req: AuthenticatedRequest, res: Response) => {
-  const id = parseInt(req.params.id);
-  const index = products.findIndex((c) => c.id === id);
-  if (index !== -1) {
-    products.splice(index, 1);
+export const deleteProducts = async (req: AuthenticatedRequest, res: Response) => {
+  const { id } = req.params;
+
+  const item = await Product.findOne({where: {id}})
+  if (item) {
+    await item.destroy();
     res.status(204).send();
   } else {
     res.status(404).json({ message: "Products not found" });

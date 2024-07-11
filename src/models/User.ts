@@ -4,6 +4,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  NonAttribute,
 } from "@sequelize/core";
 import {
   Attribute,
@@ -11,6 +12,7 @@ import {
   NotNull,
   Default,
   Unique,
+  HasMany,
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
 import { Product } from "./Product"
@@ -33,11 +35,6 @@ export class User extends Model<
   @NotNull
   declare password: string;
 
-  @HasMany(() => Product, {
-    foreignKey: 'userId',
-    inverse:{
-      as: 'user'
-    }
-  })
+  @HasMany(() => Product, "userId")
   declare products?: NonAttribute<Product[]>
 }
