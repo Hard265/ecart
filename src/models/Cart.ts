@@ -5,6 +5,7 @@ import {
   InferCreationAttributes,
   CreationOptional,
   NonAttribute,
+  HasManyGetAssociationsMixin,
 } from "@sequelize/core";
 import {
   Attribute,
@@ -16,6 +17,7 @@ import {
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
 import { Product } from "./Product";
+import { User } from "./User";
 
 export class Cart extends Model<
   InferAttributes<Cart>,
@@ -26,19 +28,22 @@ export class Cart extends Model<
   @Default(() => uniqid())
   declare id: CreationOptional<string>;
 
+  /** Defined by {@link User.reviews} */
+  declare user?: NonAttribute<User>;
+
   @Attribute(DataTypes.STRING)
   @NotNull
   declare userId: string;
 
-  @HasMany(() => CartItem, "cartId")
+  @HasMany(() => CartItem, {
+    foreignKey: "cartId",
+    inverse: {
+      as: "cart",
+    },
+  })
   declare cartItems: NonAttribute<CartItem[]>;
 
-  async totalPrice() {
-    return (await CartItem.findAll({ where: { cartId: this.id } })).reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0
-    );
-  }
+  declare getItems: HasManyGetAssociationsMixin<CartItem>;
 }
 
 export class CartItem extends Model<
@@ -50,14 +55,12 @@ export class CartItem extends Model<
   @Default(() => uniqid())
   declare id: CreationOptional<string>;
 
-  @BelongsTo(() => Cart, "cartId")
   declare cart?: NonAttribute<Cart>;
 
   @Attribute(DataTypes.STRING(18))
   @NotNull
   declare cartId: string;
 
-  @BelongsTo(() => Product, "productId")
   declare product: NonAttribute<Product>;
 
   @Attribute(DataTypes.STRING(18))

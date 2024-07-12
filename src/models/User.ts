@@ -5,6 +5,9 @@ import {
   InferCreationAttributes,
   CreationOptional,
   NonAttribute,
+  HasManyGetAssociationsMixin,
+  HasOneGetAssociationMixin,
+  HasOneCreateAssociationMixin,
 } from "@sequelize/core";
 import {
   Attribute,
@@ -14,11 +17,11 @@ import {
   Unique,
   HasMany,
   HasOne,
-  BeforeDestroy,
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
 import { Product } from "./Product";
 import { Cart } from "./Cart";
+import { Review } from "./Review";
 
 export class User extends Model<
   InferAttributes<User>,
@@ -38,9 +41,35 @@ export class User extends Model<
   @NotNull
   declare password: string;
 
-  @HasMany(() => Product, "userId")
+  @HasMany(() => Product, {
+    foreignKey: "userId",
+    inverse: {
+      as: "user",
+    },
+  })
   declare products?: NonAttribute<Product[]>;
 
-  @HasOne(() => Cart, "userId")
+  declare getProducts: HasManyGetAssociationsMixin<Product>;
+
+  @HasMany(() => Review, {
+    foreignKey: "userId",
+    inverse: {
+      as: "user",
+    },
+  })
+  declare reviews?: NonAttribute<Review[]>;
+
+  declare getReviews: HasManyGetAssociationsMixin<Review>;
+
+  @HasOne(() => Cart, {
+    foreignKey: "userId",
+    inverse: {
+      as: "user",
+    },
+  })
   declare cart?: NonAttribute<Cart>;
+
+  declare getCart: HasOneGetAssociationMixin<Cart>;
+
+  declare createCart: HasOneCreateAssociationMixin<Cart, "userId">;
 }
