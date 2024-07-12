@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JwtPayload } from "../intefaces";
+import { JwtPayload } from "../@types";
 
 export function generateToken(userId: string): string {
   const payload: JwtPayload = { userId };

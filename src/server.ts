@@ -2,7 +2,9 @@ import express, { Express, Request, Response } from "express";
 import multer from "multer";
 import productsRoutes from "./routes/productsRoutes";
 import authentionsRoutes from "./routes/authentionsRoutes";
-import path from 'path';
+import usersRoutes from "./routes/usersRoutes";
+import cartRoutes from "./routes/cartRoutes";
+import path from "path";
 import dotenv from "dotenv";
 import sequelize from "./sequelize";
 
@@ -25,7 +27,9 @@ export const upload = multer({
 app.use(express.json());
 
 app.use("/api/products", productsRoutes);
-app.use("/", authentionsRoutes);
+app.use("/api/auth", authentionsRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Shopping API");

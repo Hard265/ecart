@@ -13,9 +13,12 @@ import {
   Default,
   Unique,
   HasMany,
+  HasOne,
+  BeforeDestroy,
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
-import { Product } from "./Product"
+import { Product } from "./Product";
+import { Cart } from "./Cart";
 
 export class User extends Model<
   InferAttributes<User>,
@@ -36,5 +39,8 @@ export class User extends Model<
   declare password: string;
 
   @HasMany(() => Product, "userId")
-  declare products?: NonAttribute<Product[]>
+  declare products?: NonAttribute<Product[]>;
+
+  @HasOne(() => Cart, "userId")
+  declare cart?: NonAttribute<Cart>;
 }

@@ -1,16 +1,13 @@
 import { Response } from "express";
-import { AuthenticatedRequest } from "../intefaces";
 import { Product } from "../models/Product";
-
-// Temporary in-memory storage
-let products: any[] = [];
+import { AuthenticatedRequest } from "../@types";
 
 export const getAllProducts = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const products = await Product.findAll();
-  res.json({ user: products });
+  const products = (await Product.findAll()).map((item) => item.toJSON());
+  res.json(products);
 };
 
 export const getProductsById = async (
@@ -27,30 +24,38 @@ export const getProductsById = async (
   }
 };
 
-export const getProductsByUser = (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
+export const getProductsByUser = (req: AuthenticatedRequest, res: Response) => {
   res.status(201).json({ message: "get user products" });
-
 };
 
 export const createProducts = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  // const newProducts = {
-  //   id: products.length + 1,
-  //   ...req.body,
-  // };
-
-  res.status(201).json({ message: "successfully created" });
+  const { name, description, price, image } = req.body;
+  if (!name || !description || !price || !image) {
+    res.status(400).json({ message: "Please fill in all fields" });
+  } else {
+    const item = await Product.create({
+      name,
+      description,
+      price,
+      image,
+      userId: req.user.id,
+    });
+    res
+      .status(201)
+      .json({ message: "successfully created", item: item.toJSON() });
+  }
 };
 
-export const updateProducts = async (req: AuthenticatedRequest, res: Response) => {
+export const updateProducts = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   const { id } = req.params;
 
-  const item = await Product.findOne({where: {id}})
+  const item = await Product.findOne({ where: { id } });
 
   if (item) {
     // item.
@@ -60,10 +65,13 @@ export const updateProducts = async (req: AuthenticatedRequest, res: Response) =
   }
 };
 
-export const deleteProducts = async (req: AuthenticatedRequest, res: Response) => {
+export const deleteProducts = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   const { id } = req.params;
 
-  const item = await Product.findOne({where: {id}})
+  const item = await Product.findOne({ where: { id } });
   if (item) {
     await item.destroy();
     res.status(204).send();
