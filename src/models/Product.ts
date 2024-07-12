@@ -7,19 +7,22 @@ import {
   NonAttribute,
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
-  HasManyRemoveAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
 } from "@sequelize/core";
 import {
   Attribute,
   PrimaryKey,
   NotNull,
   Default,
-  BelongsTo,
   HasMany,
+  BelongsToMany,
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
 import { User } from "./User";
 import { Review } from "./Review";
+import { Category } from "./Category";
 
 export class Product extends Model<
   InferAttributes<Product>,
@@ -67,4 +70,18 @@ export class Product extends Model<
   declare reviews?: NonAttribute<Review[]>;
   declare getReviews: HasManyGetAssociationsMixin<Review>;
   declare createReview: HasManyCreateAssociationMixin<Review, "productId">;
+
+  @BelongsToMany(() => Category, {
+    through: "ProductCategory",
+  })
+  declare categories?: NonAttribute<Category[]>;
+  declare getCategories: BelongsToManyGetAssociationsMixin<Category>;
+  declare addCategory: BelongsToManyAddAssociationMixin<
+    Category,
+    Category["id"]
+  >;
+  declare addCategorys: BelongsToManyAddAssociationsMixin<
+    Category,
+    Category["id"]
+  >;
 }

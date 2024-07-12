@@ -5,6 +5,7 @@ import authentionsRoutes from "./routes/authentionsRoutes";
 import usersRoutes from "./routes/usersRoutes";
 import cartRoutes from "./routes/cartRoutes";
 import reviewsRoutes from "./routes/reviewsRoutes";
+import ordersRoutes from "./routes/ordersRoutes";
 import path from "path";
 import dotenv from "dotenv";
 import sequelize from "./sequelize";
@@ -32,6 +33,7 @@ app.use("/api/products/:id/reviews", reviewsRoutes);
 app.use("/api/auth", authentionsRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/orders", ordersRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Shopping API");

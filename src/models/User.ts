@@ -8,6 +8,7 @@ import {
   HasManyGetAssociationsMixin,
   HasOneGetAssociationMixin,
   HasOneCreateAssociationMixin,
+  HasManyCreateAssociationMixin,
 } from "@sequelize/core";
 import {
   Attribute,
@@ -22,6 +23,7 @@ import uniqid from "uniqid";
 import { Product } from "./Product";
 import { Cart } from "./Cart";
 import { Review } from "./Review";
+import { Order } from "./Order";
 
 export class User extends Model<
   InferAttributes<User>,
@@ -48,7 +50,6 @@ export class User extends Model<
     },
   })
   declare products?: NonAttribute<Product[]>;
-
   declare getProducts: HasManyGetAssociationsMixin<Product>;
 
   @HasMany(() => Review, {
@@ -58,7 +59,6 @@ export class User extends Model<
     },
   })
   declare reviews?: NonAttribute<Review[]>;
-
   declare getReviews: HasManyGetAssociationsMixin<Review>;
 
   @HasOne(() => Cart, {
@@ -68,8 +68,16 @@ export class User extends Model<
     },
   })
   declare cart?: NonAttribute<Cart>;
-
   declare getCart: HasOneGetAssociationMixin<Cart>;
-
   declare createCart: HasOneCreateAssociationMixin<Cart, "userId">;
+
+  @HasMany(() => Order, {
+    foreignKey: "userId",
+    inverse: {
+      as: "user",
+    },
+  })
+  declare orders?: NonAttribute<Order[]>;
+  declare getOrders: HasManyGetAssociationsMixin<Order>;
+  declare createOrder: HasManyCreateAssociationMixin<Order, "userId">;
 }

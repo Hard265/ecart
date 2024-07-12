@@ -41,6 +41,7 @@ export const createProducts = async (
       description,
       price,
       image,
+      stock: 2,
       userId: req.user.id,
     });
     res
