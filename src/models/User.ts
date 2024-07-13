@@ -53,6 +53,7 @@ export class User extends Model<
     })
     declare products?: NonAttribute<Product[]>;
     declare getProducts: HasManyGetAssociationsMixin<Product>;
+    declare createProduct: HasManyCreateAssociationMixin<Product, "userId">
 
     @HasMany(() => Review, {
         foreignKey: "userId",
