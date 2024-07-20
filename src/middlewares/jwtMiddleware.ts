@@ -1,4 +1,3 @@
-import { where } from "@sequelize/core";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
