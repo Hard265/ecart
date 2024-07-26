@@ -1,7 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../models/User";
-import { AuthenticatedRequest } from "../@types";
+import { User } from "@/models/User";
+import type { AuthenticatedRequest } from "@/@types";
+import logger from "@/services/logger;
 
 interface JWTPayload extends jwt.JwtPayload {
   userId: string;
@@ -19,7 +20,7 @@ export const authenticateToken = async (
   }
 
   if (!process.env.JWT_SECRET) {
-    console.error("JWT_SECRET is not defined");
+    logger.error("JWT_SECRET is not defined");
     return res.status(500).json({ error: "Internal server error" });
   }
 
@@ -37,7 +38,7 @@ export const authenticateToken = async (
     (req as AuthenticatedRequest).user = user;
     next();
   } catch (err) {
-    console.error("Token verification error:", err);
+    logger.error("Token verification error:", err);
     return res.status(401).json({ error: "Token verification failed" });
   }
 };
