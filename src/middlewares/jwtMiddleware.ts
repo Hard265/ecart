@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "@/models/User";
 import type { AuthenticatedRequest } from "@/@types";
-import logger from "@/services/logger;
+import logger from "@/services/logger";
 
 interface JWTPayload extends jwt.JwtPayload {
   userId: string;
