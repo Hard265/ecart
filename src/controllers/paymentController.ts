@@ -32,7 +32,7 @@ export const createPaymentIntent = async (req: AuthenticatedRequest, res: Respon
     // Send the client secret to the client
     res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
-    console.error('Error creating payment intent:', error);
+    logger.error('Error creating payment intent:', error);
     res.status(500).json({ error: 'Failed to create payment intent' });
   }
 };
@@ -45,7 +45,7 @@ export const handleWebhook = async (req: Request, res: Response) => {
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch (err) {
-    console.error('Webhook Error:', err);
+    logger.error('Webhook Error:', err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
@@ -61,7 +61,7 @@ export const handleWebhook = async (req: Request, res: Response) => {
       break;
     // ... handle other event types
     default:
-      console.log(`Unhandled event type ${event.type}`);
+      logger.log(`Unhandled event type ${event.type}`);
   }
 
   // Return a response to acknowledge receipt of the event
