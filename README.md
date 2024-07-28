@@ -24,7 +24,7 @@ Before you begin, ensure you have met the following requirements:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/shopping-api.git
+   git clone https://github.com/Hard265/outfitter-api.git
    cd shopping-api
    ```
 
