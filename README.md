@@ -1,4 +1,4 @@
-# Shopping API
+# Outfitter Shopping API
 
 This is a robust e-commerce API built with Node.js, Express, and TypeScript. It provides endpoints for user authentication, product management, order processing, and payment integration.
 
