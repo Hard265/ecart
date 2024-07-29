@@ -1,5 +1,6 @@
 import express, {
     Express,
+    NextFunction,
     Request,
     Response,
 } from "express";
@@ -14,6 +15,9 @@ import cartRoutes from "./routes/cartRoutes";
 import reviewsRoutes from "./routes/reviewsRoutes";
 import ordersRoutes from "./routes/ordersRoutes";
 import categoriesRoutes from "./routes/categoriesRoutes";
+
+import * as paymentController from "./controllers/paymentController"
+
 import path from "path";
 import dotenv from "dotenv";
 import helmet from 'helmet';

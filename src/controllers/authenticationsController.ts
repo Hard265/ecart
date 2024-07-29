@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { User } from "../models/User";
 import { generateToken } from "../utils/tokens";
+import logger from "../services/logger";
 
 export const signup = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -57,6 +58,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   // Optional: Perform any server-side actions like logging
-  console.log("User logged out.");
+  logger.log("User logged out.");
   res.status(200).json({ message: "Successfully logged out" });
 };

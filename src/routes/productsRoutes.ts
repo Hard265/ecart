@@ -1,7 +1,7 @@
 import express, { Router } from "express";
-import * as productsController from "../controllers/productsController";
-import { authenticateToken } from "../middlewares/jwtMiddleware";
-import { verifyProductOwnership } from "../middleware/authorizationMiddleware";
+import * as productsController from "@/controllers/productsController";
+import { authenticateToken } from "@/middlewares/jwtMiddleware";
+import { verifyProductOwnership } from "@/middlewares/authorizationMiddleware";
 
 const router: Router = express.Router();
 
