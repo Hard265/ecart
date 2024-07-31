@@ -10,6 +10,14 @@ export const getAllUsers = async (req: AuthenticatedRequest, res: Response) => {
   res.json(users);
 };
 
+export const getMyUser = async (req: AuthenticatedRequest, res: Response) => {
+  const user = await User.findOne({
+    where: { username: req.user?.username },
+    attributes: { exclude: ["password"] },
+  });
+  res.status(200).json(user?.toJSON());
+};
+
 export const getUserByUsername = async (
   req: AuthenticatedRequest,
   res: Response

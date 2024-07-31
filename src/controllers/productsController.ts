@@ -1,6 +1,9 @@
 import { Response } from "express";
 import { Product } from "../models/Product";
 import { AuthenticatedRequest } from "../@types";
+import { upload } from "../server";
+import logger from "../services/logger";
+import { User } from "../models/User";
 
 export const getAllProducts = async (
   req: AuthenticatedRequest,
@@ -32,21 +35,37 @@ export const createProducts = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const { name, description, price, image } = req.body;
-  if (!name || !description || !price || !image) {
-    res.status(400).json({ message: "Please fill in all fields" });
-  } else {
-    const item = await Product.create({
-      name,
-      description,
-      price,
-      image,
-      stock: 2,
-      userId: req.user.id,
+  try {
+    upload.single("image")(req, res, async (err) => {
+      if (err) {
+        res.status(400).json({ message: "Error uploading image" });
+      } else if (err) {
+        res.status(500).json({ message: "Error uploading image" });
+      }
     });
-    res
-      .status(201)
-      .json({ message: "successfully created", item: item.toJSON() });
+
+    const { name, description, price, stock } = req.body;
+    if (!name || !description || !price) {
+      res.status(400).json({ message: "Please fill in all fields" });
+    } else {
+      const image = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+      const item = await Product.create({
+        name,
+        description,
+        price,
+        stock,
+        image,
+        userId: req.user.id,
+      });
+
+      res
+        .status(201)
+        .json({ message: "successfully created", item: item.toJSON() });
+    }
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ message: "Error creating product", error });
   }
 };
 

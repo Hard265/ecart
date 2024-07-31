@@ -9,7 +9,6 @@ import {
   HasManyCreateAssociationMixin,
   BelongsToManyGetAssociationsMixin,
   BelongsToManyAddAssociationMixin,
-  BelongsToManyAddAssociationsMixin,
 } from "@sequelize/core";
 import {
   Attribute,
@@ -42,15 +41,11 @@ export class Product extends Model<
   declare description: string;
 
   @Attribute(DataTypes.STRING)
-  @NotNull
-  declare image: string;
+  declare image?: string;
 
   @Attribute(DataTypes.INTEGER)
   @NotNull
   declare price: number;
-
-  /** Defined by {@link User.reviews} */
-  declare user?: NonAttribute<User>;
 
   @Attribute(DataTypes.STRING)
   @NotNull
@@ -69,18 +64,14 @@ export class Product extends Model<
   })
   declare reviews?: NonAttribute<Review[]>;
   declare getReviews: HasManyGetAssociationsMixin<Review>;
-  declare createReview: HasManyCreateAssociationMixin<Review, "productId">;
+  declare createReviews: HasManyCreateAssociationMixin<Review, "productId">;
 
   @BelongsToMany(() => Category, {
     through: "ProductCategory",
   })
   declare categories?: NonAttribute<Category[]>;
   declare getCategories: BelongsToManyGetAssociationsMixin<Category>;
-  declare addCategory: BelongsToManyAddAssociationMixin<
-    Category,
-    Category["id"]
-  >;
-  declare addCategorys: BelongsToManyAddAssociationsMixin<
+  declare addCategories: BelongsToManyAddAssociationMixin<
     Category,
     Category["id"]
   >;

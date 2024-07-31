@@ -31,7 +31,7 @@ export const createReview = async (
   } else {
     const product = await Product.findByPk(id);
     if (product) {
-      product.createReview({
+      product.createReviews({
         rating: parseInt(rating),
         comment,
         userId: req.user.id,

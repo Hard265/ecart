@@ -58,6 +58,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   // Optional: Perform any server-side actions like logging
-  logger.log("User logged out.");
+  logger.log("2", "User logged out.");
   res.status(200).json({ message: "Successfully logged out" });
 };

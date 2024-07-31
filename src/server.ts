@@ -1,12 +1,7 @@
-import express, {
-    Express,
-    NextFunction,
-    Request,
-    Response,
-} from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import multer from "multer";
-import csrf from 'csurf';
-import rateLimit from 'express-rate-limit';
+import csrf from "csurf";
+import rateLimit from "express-rate-limit";
 import productsRoutes from "./routes/productsRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
 import authentionsRoutes from "./routes/authentionsRoutes";
@@ -16,11 +11,11 @@ import reviewsRoutes from "./routes/reviewsRoutes";
 import ordersRoutes from "./routes/ordersRoutes";
 import categoriesRoutes from "./routes/categoriesRoutes";
 
-import * as paymentController from "./controllers/paymentController"
+import * as paymentController from "./controllers/paymentController";
 
 import path from "path";
 import dotenv from "dotenv";
-import helmet from 'helmet';
+import helmet from "helmet";
 import sequelize from "./sequelize";
 
 dotenv.config();
@@ -30,32 +25,32 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
 });
 const csrfProtection = csrf({ cookie: true });
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, "uploads/");
-        },
-        filename: (req, file, cb) => {
-            cb(
-                null,
-                Date.now() + path.extname(file.originalname)
-            );
-        },
-    }),
+export const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads/");
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  }),
 });
 
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
 app.use("/api/payments", paymentRoutes);
-app.post("/api/payments/webhook", express.raw({type: 'application/json'}), paymentController.handleWebhook);
-
+app.post(
+  "/api/payments/webhook",
+  express.raw({ type: "application/json" }),
+  paymentController.handleWebhook
+);
 
 app.use("/api/products", productsRoutes);
 app.use("/api/products/:id/reviews", reviewsRoutes);
@@ -66,13 +61,13 @@ app.use("/api/orders", ordersRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'An unexpected error occurred' });
+  res.status(500).json({ message: "An unexpected error occurred" });
 });
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Shopping API");
+  res.send("Shopping API");
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });

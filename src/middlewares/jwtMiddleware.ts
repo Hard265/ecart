@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "@/models/User";
-import type { AuthenticatedRequest } from "@/@types";
-import logger from "@/services/logger";
+import { User } from "../models/User";
+import type { AuthenticatedRequest } from "../@types";
+import logger from "../services/logger";
 
 interface JWTPayload extends jwt.JwtPayload {
   userId: string;
@@ -25,7 +25,7 @@ export const authenticateToken = async (
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
     if (!decoded.userId || (decoded.exp && Date.now() >= decoded.exp * 1000)) {
       return res.status(401).json({ error: "Invalid or expired token" });
     }
