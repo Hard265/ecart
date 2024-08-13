@@ -1,6 +1,13 @@
-2024-07-31 15:02:22:222 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
-2024-07-31 15:04:42:442 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
-2024-07-31 15:08:51:851 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
-2024-07-31 15:21:23:2123 [31merror[39m: [31mreq.user.createProducts is not a function[39m
-2024-07-31 15:25:42:2542 [31merror[39m: [31muser.createProducts is not a function[39m
-2024-07-31 15:31:43:3143 [31merror[39m: [31muser.createProducts is not a function[39m
+2024-08-13 17:08:33:833 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:12:18:1218 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:16:03:163 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:20:31:2031 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:21:47:2147 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:23:15:2315 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:23:39:2339 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:25:04:254 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-08-13 17:27:43:2743 [31merror[39m: [31muser.createProducts is not a function[39m
+2024-08-13 17:30:03:303 [31merror[39m: [31muser.createProducts is not a function[39m
+2024-08-13 17:32:52:3252 [31merror[39m: [31muser.createProducts is not a function[39m
+2024-08-13 17:37:27:3727 [31merror[39m: [31mValidation error: 'st5ip6zglzskgyzx' is not a valid integer[39m
+2024-08-13 17:39:31:3931 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m

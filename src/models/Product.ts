@@ -56,23 +56,18 @@ export class Product extends Model<
   @Default(1)
   declare stock: number;
 
-  @HasMany(() => Review, {
-    foreignKey: "productId",
-    inverse: {
-      as: "product",
-    },
-  })
-  declare reviews?: NonAttribute<Review[]>;
-  declare getReviews: HasManyGetAssociationsMixin<Review>;
-  declare createReviews: HasManyCreateAssociationMixin<Review, "productId">;
+  // @HasMany(() => Review, "productId")
+  // declare reviews?: NonAttribute<Review[]>;
+  // declare getReviews: HasManyGetAssociationsMixin<Review>;
+  // declare createReviews: HasManyCreateAssociationMixin<Review, "productId">;
 
-  @BelongsToMany(() => Category, {
-    through: "ProductCategory",
-  })
-  declare categories?: NonAttribute<Category[]>;
-  declare getCategories: BelongsToManyGetAssociationsMixin<Category>;
-  declare addCategories: BelongsToManyAddAssociationMixin<
-    Category,
-    Category["id"]
-  >;
+  // @BelongsToMany(() => Category, {
+  //   through: "ProductCategory",
+  // })
+  // declare categories?: NonAttribute<Category[]>;
+  // declare getCategories: BelongsToManyGetAssociationsMixin<Category>;
+  // declare addCategories: BelongsToManyAddAssociationMixin<
+  //   Category,
+  //   Category["id"]
+  // >;
 }

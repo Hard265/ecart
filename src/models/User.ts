@@ -30,9 +30,9 @@ export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
 > {
-  @PrimaryKey
   @Attribute(DataTypes.STRING(18))
   @Default(() => uniqid())
+  @PrimaryKey
   declare id: CreationOptional<string>;
 
   @Attribute(DataTypes.STRING)
@@ -46,35 +46,38 @@ export class User extends Model<
 
   @HasMany(() => Product, "userId")
   declare products?: NonAttribute<Product[]>;
-  declare getProducts: HasManyGetAssociationsMixin<Product>;
-  declare createProducts: HasManyCreateAssociationMixin<Product, "userId">;
 
-  @HasMany(() => Review, {
-    foreignKey: "userId",
-    inverse: {
-      as: "user",
-    },
-  })
-  declare reviews?: NonAttribute<Review[]>;
-  declare getReviews: HasManyGetAssociationsMixin<Review>;
+  // @HasMany(() => Product, "userId")
+  // declare products?: NonAttribute<Product[]>;
+  // declare getProducts: HasManyGetAssociationsMixin<Product>;
+  // declare createProducts: HasManyCreateAssociationMixin<Product, "userId">;
 
-  @HasOne(() => Cart, {
-    foreignKey: "userId",
-    inverse: {
-      as: "user",
-    },
-  })
-  declare cart?: NonAttribute<Cart>;
-  declare getCart: HasOneGetAssociationMixin<Cart>;
-  declare createCart: HasOneCreateAssociationMixin<Cart, "userId">;
+  // @HasMany(() => Review, {
+  //   foreignKey: "userId",
+  //   inverse: {
+  //     as: "user",
+  //   },
+  // })
+  // declare reviews?: NonAttribute<Review[]>;
+  // declare getReviews: HasManyGetAssociationsMixin<Review>;
 
-  @HasMany(() => Order, {
-    foreignKey: "userId",
-    inverse: {
-      as: "user",
-    },
-  })
-  declare orders?: NonAttribute<Order[]>;
-  declare getOrders: HasManyGetAssociationsMixin<Order>;
-  declare createOrder: HasManyCreateAssociationMixin<Order, "userId">;
+  // @HasOne(() => Cart, {
+  //   foreignKey: "userId",
+  //   inverse: {
+  //     as: "user",
+  //   },
+  // })
+  // declare cart?: NonAttribute<Cart>;
+  // declare getCart: HasOneGetAssociationMixin<Cart>;
+  // declare createCart: HasOneCreateAssociationMixin<Cart, "userId">;
+
+  // @HasMany(() => Order, {
+  //   foreignKey: "userId",
+  //   inverse: {
+  //     as: "user",
+  //   },
+  // })
+  // declare orders?: NonAttribute<Order[]>;
+  // declare getOrders: HasManyGetAssociationsMixin<Order>;
+  // declare createOrder: HasManyCreateAssociationMixin<Order, "userId">;
 }

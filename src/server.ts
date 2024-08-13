@@ -53,12 +53,12 @@ app.post(
 );
 
 app.use("/api/products", productsRoutes);
-app.use("/api/products/:id/reviews", reviewsRoutes);
+// app.use("/api/products/:id/reviews", reviewsRoutes);
 app.use("/api/auth", authentionsRoutes);
 app.use("/api/users", usersRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/orders", ordersRoutes);
-app.use("/api/categories", categoriesRoutes);
+// app.use("/api/cart", cartRoutes);
+// app.use("/api/orders", ordersRoutes);
+// app.use("/api/categories", categoriesRoutes);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({ message: "An unexpected error occurred" });

@@ -9,7 +9,15 @@ export const getAllProducts = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const products = (await Product.findAll()).map((item) => item.toJSON());
+  const products = (
+    await Product.findAll({
+      attributes: ["description", "name", "price", "stock", "image", "id"],
+      include: {
+        model: User,
+        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+      },
+    })
+  ).map((item) => item.toJSON());
   res.json(products);
 };
 

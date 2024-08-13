@@ -1,10 +1,17 @@
 import { Response } from "express";
 import { User } from "../models/User";
 import { AuthenticatedRequest } from "../@types";
+import { Product } from "../models/Product";
 
 export const getAllUsers = async (req: AuthenticatedRequest, res: Response) => {
   const users = (
-    await User.findAll({ attributes: { exclude: ["password"] } })
+    await User.findAll({
+      include: {
+        model: Product,
+        attributes: ["id", "name", "price", "description", "image"],
+      },
+      attributes: ["id", "username"],
+    })
   ).map((user) => user.toJSON());
 
   res.json(users);

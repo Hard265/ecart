@@ -10,14 +10,16 @@ import { Review } from "./models/Review";
 const sequelize = new Sequelize({
   dialect: SqliteDialect,
   storage: "sequelize.sqlite",
-  models: [Product, User, Cart, CartItem, Review, Order, OrderItem, Category],
+  models: [
+    Product,
+    User /* Cart, CartItem, Review, Order, OrderItem, Category*/,
+  ],
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
-    idle: 10000
-  }
+    idle: 10000,
+  },
 });
-
 
 export default sequelize;
