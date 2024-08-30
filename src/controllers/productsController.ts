@@ -9,16 +9,34 @@ export const getAllProducts = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const products = (
-    await Product.findAll({
+  const page = parseInt(req.query.page as string) || 1;
+  const itemsPerPage = parseInt(req.query.itemsPerPage as string) || 10;
+
+  const offset = (page - 1) * itemsPerPage;
+
+  try {
+    const { count, rows } = await Product.findAndCountAll({
       attributes: ["description", "name", "price", "stock", "image", "id"],
       include: {
         model: User,
         attributes: { exclude: ["password", "createdAt", "updatedAt"] },
       },
-    })
-  ).map((item) => item.toJSON());
-  res.json(products);
+      limit: itemsPerPage,
+      offset: offset,
+    });
+
+    const totalPages = Math.ceil(count / itemsPerPage);
+
+    res.json({
+      products: rows.map((item) => item.toJSON()),
+      currentPage: page,
+      totalPages: totalPages,
+      totalItems: count,
+      itemsPerPage: itemsPerPage,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred while fetching products" });
+  }
 };
 
 export const getProductsById = async (
