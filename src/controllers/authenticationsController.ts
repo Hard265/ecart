@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { User } from "../models/User";
 import { generateToken } from "../utils/tokens";
 import logger from "../services/logger";
+import { AuthenticatedRequest } from "@/@types";
 
 export const signup = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -61,3 +62,12 @@ export const logout = async (req: Request, res: Response) => {
   logger.log("2", "User logged out.");
   res.status(200).json({ message: "Successfully logged out" });
 };
+
+
+export const whoami = async (req: Request & AuthenticatedRequest, res: Response) => {
+  const user = await User.findOne({
+    where: { username: req.user?.username },
+    attributes: { include: ['id', 'username'] },
+  });
+  res.status(200).json(user?.toJSON());
+}

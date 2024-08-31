@@ -74,7 +74,7 @@ export const createProducts = async (
     if (!name || !description || !price) {
       res.status(400).json({ message: "Please fill in all fields" });
     } else {
-      const image = req.file ? `/uploads/${req.file.filename}` : undefined;
+      const image = req.body.image || (req.file ? `/uploads/${req.file.filename}` : undefined)
 
       const item = await Product.create({
         name,
@@ -104,7 +104,6 @@ export const updateProducts = async (
   const item = await Product.findOne({ where: { id } });
 
   if (item) {
-    // item.
     res.json(item.toJSON());
   } else {
     res.status(404).json({ message: "Product not found" });

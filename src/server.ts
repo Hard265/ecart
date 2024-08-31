@@ -1,6 +1,5 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import multer from "multer";
-import csrf from "csurf";
 import rateLimit from "express-rate-limit";
 import productsRoutes from "./routes/productsRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
@@ -28,7 +27,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
 });
-const csrfProtection = csrf({ cookie: true });
+
 export const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
@@ -43,7 +42,6 @@ export const upload = multer({
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
-// app.use(csrfProtection);
 
 app.use("/api/payments", paymentRoutes);
 app.post(
