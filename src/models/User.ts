@@ -47,6 +47,11 @@ export class User extends Model<
   @HasMany(() => Product, "userId")
   declare products?: NonAttribute<Product[]>;
 
+  @HasOne(() => Cart, "ownerId")
+  declare cart?: NonAttribute<Cart>;
+  declare getCart: HasOneGetAssociationMixin<Cart>;
+  // declare createCart: HasOneCreateAssociationMixin<Cart, "userId">;
+
   // @HasMany(() => Product, "userId")
   // declare products?: NonAttribute<Product[]>;
   // declare getProducts: HasManyGetAssociationsMixin<Product>;
@@ -61,15 +66,6 @@ export class User extends Model<
   // declare reviews?: NonAttribute<Review[]>;
   // declare getReviews: HasManyGetAssociationsMixin<Review>;
 
-  // @HasOne(() => Cart, {
-  //   foreignKey: "userId",
-  //   inverse: {
-  //     as: "user",
-  //   },
-  // })
-  // declare cart?: NonAttribute<Cart>;
-  // declare getCart: HasOneGetAssociationMixin<Cart>;
-  // declare createCart: HasOneCreateAssociationMixin<Cart, "userId">;
 
   // @HasMany(() => Order, {
   //   foreignKey: "userId",

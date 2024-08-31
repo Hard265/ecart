@@ -48,7 +48,7 @@ export const verifyCartOwnership = async (
                 .json({ message: "Cart not found" });
         }
 
-        if (cart.userId !== req.user.id) {
+        if (cart.ownerId !== req.user.id) {
             return res.status(403).json({
                 message:
                     "You are not authorized to perform this action",

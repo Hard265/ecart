@@ -12,7 +12,8 @@ const sequelize = new Sequelize({
   storage: "sequelize.sqlite",
   models: [
     Product,
-    User /* Cart, CartItem, Review, Order, OrderItem, Category*/,
+    User,
+    Cart/* CartItem, Review, Order, OrderItem, Category*/,
   ],
   pool: {
     max: 5,

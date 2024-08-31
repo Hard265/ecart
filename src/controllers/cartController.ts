@@ -21,7 +21,7 @@ export const addToCart = async (req: CartRequest, res: Response) => {
 };
 
 export const updateCart = async (req: CartRequest, res: Response) => {
-  const cart = await Cart.findOne({ where: { userId: req.user.id } });
+  const cart = await Cart.findOne({ where: { ownerId: req.user.id } });
   const { productId, quantity } = req.body;
 
   if (!cart) {

@@ -28,22 +28,19 @@ export class Cart extends Model<
   @Default(() => uniqid())
   declare id: CreationOptional<string>;
 
-  /** Defined by {@link User.reviews} */
-  declare user?: NonAttribute<User>;
-
   @Attribute(DataTypes.STRING)
   @NotNull
-  declare userId: string;
+  declare ownerId: string;
 
-  @HasMany(() => CartItem, {
-    foreignKey: "cartId",
-    inverse: {
-      as: "cart",
-    },
-  })
-  declare cartItems: NonAttribute<CartItem[]>;
+  // @HasMany(() => CartItem, {
+  //   foreignKey: "cartId",
+  //   inverse: {
+  //     as: "cart",
+  //   },
+  // })
+  // declare cartItems: NonAttribute<CartItem[]>;
 
-  declare getItems: HasManyGetAssociationsMixin<CartItem>;
+  // declare getItems: HasManyGetAssociationsMixin<CartItem>;
 }
 
 export class CartItem extends Model<
