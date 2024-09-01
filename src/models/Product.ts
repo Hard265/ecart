@@ -43,7 +43,7 @@ export class Product extends Model<
   @Attribute(DataTypes.STRING)
   declare image?: string;
 
-  @Attribute(DataTypes.INTEGER)
+  @Attribute(DataTypes.FLOAT)
   @NotNull
   declare price: number;
 
@@ -56,10 +56,10 @@ export class Product extends Model<
   @Default(1)
   declare stock: number;
 
-  // @HasMany(() => Review, "productId")
-  // declare reviews?: NonAttribute<Review[]>;
-  // declare getReviews: HasManyGetAssociationsMixin<Review>;
-  // declare createReviews: HasManyCreateAssociationMixin<Review, "productId">;
+  @HasMany(() => Review, "productId")
+  declare reviews?: NonAttribute<Review[]>;
+  declare getReviews: HasManyGetAssociationsMixin<Review>;
+  declare createReview: HasManyCreateAssociationMixin<Review, "productId">;
 
   // @BelongsToMany(() => Category, {
   //   through: "ProductCategory",

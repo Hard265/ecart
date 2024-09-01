@@ -11,3 +11,7 @@
 2024-08-13 17:32:52:3252 [31merror[39m: [31muser.createProducts is not a function[39m
 2024-08-13 17:37:27:3727 [31merror[39m: [31mValidation error: 'st5ip6zglzskgyzx' is not a valid integer[39m
 2024-08-13 17:39:31:3931 [31merror[39m: [31mSQLITE_CONSTRAINT: FOREIGN KEY constraint failed[39m
+2024-09-01 09:12:57:1257 [31merror[39m: [31mValidation error: 453.18 is not a valid integer[39m
+2024-09-01 09:55:05:555 [31merror[39m: [31mToken verification error: jwt expired[39m
+2024-09-01 09:55:34:5534 [31merror[39m: [31mToken verification error: jwt expired[39m
+2024-09-01 09:58:32:5832 [31merror[39m: [31mToken verification error: jwt expired[39m

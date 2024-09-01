@@ -1,5 +1,6 @@
 .env
 node_modules
 dist
-sequelize.sqlite
 logs
+*.sqlite3
+*.log

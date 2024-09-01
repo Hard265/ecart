@@ -85,7 +85,7 @@ async function handleSuccessfulPayment(paymentIntent: Stripe.PaymentIntent) {
   const orderId = paymentIntent.metadata.orderId;
   const order = await Order.findByPk(orderId);
   if (order) {
-    order.status = "paid";
+    order.status = "delivered";
     await order.save();
   }
 }

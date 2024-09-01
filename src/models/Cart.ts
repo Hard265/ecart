@@ -1,69 +1,86 @@
 import {
-  DataTypes,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-  NonAttribute,
-  HasManyGetAssociationsMixin,
+    BelongsToGetAssociationMixin,
+    CreationOptional,
+    DataTypes,
+    HasManyCreateAssociationMixin,
+    HasManyGetAssociationsMixin,
+    InferAttributes,
+    InferCreationAttributes,
+    Model,
+    NonAttribute,
 } from "@sequelize/core";
 import {
-  Attribute,
-  PrimaryKey,
-  NotNull,
-  Default,
-  HasMany,
-  BelongsTo,
+    Attribute,
+    BelongsTo,
+    Default,
+    HasMany,
+    NotNull,
+    PrimaryKey,
 } from "@sequelize/core/decorators-legacy";
 import uniqid from "uniqid";
-import { Product } from "./Product";
 import { User } from "./User";
+import { Product } from "./Product";
 
 export class Cart extends Model<
-  InferAttributes<Cart>,
-  InferCreationAttributes<Cart>
+    InferAttributes<Cart>,
+    InferCreationAttributes<Cart>
 > {
-  @PrimaryKey
-  @Attribute(DataTypes.STRING(18))
-  @Default(() => uniqid())
-  declare id: CreationOptional<string>;
+    @PrimaryKey
+    @Attribute(DataTypes.STRING(18))
+    @Default(() => uniqid())
+    declare id: CreationOptional<string>;
 
-  @Attribute(DataTypes.STRING)
-  @NotNull
-  declare ownerId: string;
+    @Attribute(DataTypes.STRING)
+    @NotNull
+    declare ownerId: string;
 
-  // @HasMany(() => CartItem, {
-  //   foreignKey: "cartId",
-  //   inverse: {
-  //     as: "cart",
-  //   },
-  // })
-  // declare cartItems: NonAttribute<CartItem[]>;
+    @BelongsTo(() => User, "ownerId")
+    declare owner?: NonAttribute<User>;
+    declare getOwner: BelongsToGetAssociationMixin<User>;
 
-  // declare getItems: HasManyGetAssociationsMixin<CartItem>;
+    @HasMany(() => CartItem, "cartId")
+    declare items: NonAttribute<CartItem[]>;
+    declare getItems: HasManyGetAssociationsMixin<CartItem>;
+    declare createItem: HasManyCreateAssociationMixin<
+        CartItem,
+        "cartId"
+    >;
+
+    // @Attribute(DataTypes.REAL)
+    // @NotNull
+    // get totalPrice(): Promise<number> {
+    //     return this.getItems().then((items)=> items.reduce((total, item)=>{
+    //         return total +( ( item.getProduct()). || 0)
+    //     }, 0))
+    // }
 }
 
 export class CartItem extends Model<
-  InferAttributes<CartItem>,
-  InferCreationAttributes<CartItem>
+    InferAttributes<CartItem>,
+    InferCreationAttributes<CartItem>
 > {
-  @PrimaryKey
-  @Attribute(DataTypes.STRING(18))
-  @Default(() => uniqid())
-  declare id: CreationOptional<string>;
+    @PrimaryKey
+    @Attribute(DataTypes.STRING(18))
+    @Default(() => uniqid())
+    declare id: CreationOptional<string>;
 
-  declare cart?: NonAttribute<Cart>;
+    @Attribute(DataTypes.STRING)
+    @NotNull
+    declare cartId: string;
 
-  @Attribute(DataTypes.STRING(18))
-  @NotNull
-  declare cartId: string;
+    @Attribute(DataTypes.STRING)
+    @NotNull
+    declare productId: string;
 
-  declare product: NonAttribute<Product>;
+    @Attribute(DataTypes.INTEGER)
+    @NotNull
+    @Default(1)
+    declare quantity: number;
 
-  @Attribute(DataTypes.STRING(18))
-  @NotNull
-  declare productId: string;
+    @BelongsTo(() => Cart, "cartId")
+    declare cart?: NonAttribute<Cart>;
 
-  @Attribute(DataTypes.INTEGER)
-  declare quantity: number;
+    @BelongsTo(() => Product, "productId")
+    declare product?: NonAttribute<Product>;
+    declare getProduct: BelongsToGetAssociationMixin<Product>;
 }
