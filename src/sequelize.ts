@@ -1,5 +1,4 @@
 import { Sequelize } from "@sequelize/core";
-import { SqliteDialect } from "@sequelize/sqlite3";
 import { PostgresDialect } from '@sequelize/postgres';
 import { Product } from "./models/Product";
 import { User } from "./models/User";
@@ -10,10 +9,10 @@ import { Review } from "./models/Review";
 
 const sequelize = new Sequelize({
   dialect: PostgresDialect,
-  database: "ecart_7gdv",
-  user: "hard265",
-  password: "rJvAFCHX1QWLxuHnOl0rmLo86l2OXSpX",
-  url: "postgresql://hard265:rJvAFCHX1QWLxuHnOl0rmLo86l2OXSpX@dpg-cr9tk7ij1k6c73blh8qg-a.oregon-postgres.render.com/ecart_7gdv",
+  database: process.env.DB_NAME!,
+  user: process.env.DB_USERNAME!,
+  password: process.env.DB_PASSWORD!,
+  url: process.env.DB_URL!,
   clientMinMessages: "notice",
   ssl: true,
  // port: 5432,
