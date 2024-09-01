@@ -15,6 +15,7 @@ const sequelize = new Sequelize({
   password: "rJvAFCHX1QWLxuHnOl0rmLo86l2OXSpX",
   url: "postgresql://hard265:rJvAFCHX1QWLxuHnOl0rmLo86l2OXSpX@dpg-cr9tk7ij1k6c73blh8qg-a.oregon-postgres.render.com/ecart_7gdv",
   clientMinMessages: "notice",
+  ssl: true,
  // port: 5432,
   models: [
     Product,
