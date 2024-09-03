@@ -143,21 +143,41 @@ export const createProducts = async (
 };
 
 export const updateProducts = async (
-    req: AuthenticatedRequest,
+    req: AuthenticatedRequest, 
     res: Response
 ) => {
     const { id } = req.params;
 
-    const item = await Product.findOne({ where: { id } });
+    try {
+       
+        const item = await Product.findOne({ where: { id } });
 
-    if (item) {
-        res.json(item.toJSON());
-    } else {
-        res.status(404).json({
-            message: "Product not found",
+        if (!item) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        
+        const updates = Object.keys(req.body).reduce((acc, key) => {
+            if (req.body[key] !== undefined) {
+                acc[key] = req.body[key];
+            }
+            return acc;
+        }, {} as Record<string, any>);
+
+        
+        const updatedItem = await item.update(updates);
+
+        return res.status(200).json({ 
+            message: "Product updated successfully", 
+            product: updatedItem.toJSON() 
         });
+        
+    } catch (error) {
+        logger.error("Error updating product:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 
 export const deleteProducts = async (
     req: AuthenticatedRequest,
