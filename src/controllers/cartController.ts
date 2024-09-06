@@ -12,20 +12,18 @@ export const getCart = async (
         attributes: {
             exclude: ["id", "ownerId"],
         },
-        include: [
-            {
-                model: CartItem,
-                attributes: {
-                    exclude: ["cartId", "productId"],
-                },
+        include: {
+            model: CartItem,
+            attributes: {
+                exclude: ["productId", "cartId"],
             },
-            {
+            include: {
                 model: Product,
                 attributes: {
-                    exclude: ["userId", "reviews"],
+                    exclude: ["userId"],
                 },
             },
-        ],
+        },
     });
 
     res.json(cart?.toJSON());
