@@ -9,7 +9,23 @@ export const getCart = async (
 ) => {
     const cart = await Cart.findOne({
         where: { ownerId: req.user.id },
-        include: { model: CartItem },
+        attributes: {
+            exclude: ["id", "ownerId"],
+        },
+        include: [
+            {
+                model: CartItem,
+                attributes: {
+                    exclude: ["cartId", "productId"],
+                },
+            },
+            {
+                model: Product,
+                attributes: {
+                    exclude: ["userId", "reviews"],
+                },
+            },
+        ],
     });
 
     res.json(cart?.toJSON());
