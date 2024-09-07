@@ -4,6 +4,6 @@ import { JwtPayload } from "../@types";
 export function generateToken(userId: string): string {
   const payload: JwtPayload = { userId };
   const secret = process.env.JWT_SECRET; // Store secret securely (environment variable)
-  const options = { expiresIn: "1h" };
+  const options = { expiresIn: "1w" };
   return jwt.sign(payload, secret!, options);
 }
